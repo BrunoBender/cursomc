@@ -32,7 +32,7 @@ public class CategoriaResource {
 //	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> getOne(@PathVariable Integer id) {
+	public ResponseEntity<Optional<Categoria>> getOne(@PathVariable Integer id) {
 		
 			Optional<Categoria> obj = service.buscar(id);
 			return ResponseEntity.ok().body(obj);
@@ -40,10 +40,18 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> post(@RequestBody Categoria categoria){
+	public ResponseEntity<Categoria> post(@RequestBody Categoria categoria){
 		categoria = service.save(categoria);
-		//busca a chamada do método (categorias/) e resgata o id criado
+		//busca a chamada do método (categorias/) e resgata o id criado 
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Categoria> put(@PathVariable Integer id, @RequestBody Categoria obj){
+		obj.setId(id);
+		obj = service.put(obj);
+		
+		return ResponseEntity.noContent().build();
 	}
 }

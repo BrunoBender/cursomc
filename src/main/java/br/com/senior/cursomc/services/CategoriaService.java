@@ -40,4 +40,9 @@ public class CategoriaService {
 		return repo.save(obj);
 	}
 	
+	public Categoria put(Categoria obj) {
+		buscar(obj.getId());
+		return repo.save(obj);
+	}
+	
 }
