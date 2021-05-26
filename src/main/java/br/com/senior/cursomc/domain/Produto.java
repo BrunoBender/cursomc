@@ -27,13 +27,12 @@ public class Produto implements Serializable{
 	private Integer id;
 	private String nome;
 	private double preco;
-	//bloqueia o retorno das categorias novamente, penanto apenas as informações do produto
-	@JsonBackReference
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA",
 			   joinColumns = @JoinColumn(name = "produto_id"),
 			   inverseJoinColumns = @JoinColumn(name = "categoria_id")
 	)
+	@JsonIgnore
 	private List<Categoria> categorias = new ArrayList<>();
 	@JsonIgnore
 	@OneToMany(mappedBy = "id.produto")
