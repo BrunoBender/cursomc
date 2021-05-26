@@ -34,5 +34,10 @@ public class CategoriaService {
 	public void saveAll(List<Categoria> obj) {
 		repo.saveAll(obj);
 	}
+
+	public Categoria save(Categoria obj) {	
+		obj.setId(null);
+		return repo.save(obj);
+	}
 	
 }
