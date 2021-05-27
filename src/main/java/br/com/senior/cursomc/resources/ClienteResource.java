@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.senior.cursomc.domain.Cliente;
 import br.com.senior.cursomc.domain.Cliente;
 import br.com.senior.cursomc.dto.ClienteDTO;
+import br.com.senior.cursomc.dto.ClienteNewDto;
 import br.com.senior.cursomc.services.ClienteService;
 import br.com.senior.cursomc.services.ClienteService;
 
@@ -59,11 +60,11 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> post(@Valid @RequestBody ClienteDTO categoriaDto){
-		Cliente categoria = service.fromDTO(categoriaDto);
-		categoria = service.save(categoria);
+	public ResponseEntity<?> post(@Valid @RequestBody ClienteNewDto objDto){
+		Cliente obj = service.fromDTO(objDto);
+		obj = service.save(obj);
 		//busca a chamada do método (categorias/) e resgata o id criado 
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
