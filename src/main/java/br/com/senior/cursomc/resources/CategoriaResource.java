@@ -1,10 +1,12 @@
 package br.com.senior.cursomc.resources;
 
 import java.net.URI;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,7 +35,7 @@ public class CategoriaResource {
 		List<Categoria> lista = service.getAll();
 		List<CategoriaDTO> objConvert = lista.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 		
-		return ResponseEntity.ok().body(objConvert);
+		return ResponseEntity.ok().body(objConvert); 
 	}
 	
 	@RequestMapping(value="page", method=RequestMethod.GET)
@@ -56,7 +58,8 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> post(@RequestBody Categoria categoria){
+	public ResponseEntity<?> post(@Valid @RequestBody CategoriaDTO categoriaDto){
+		Categoria categoria = service.fromDTO(categoriaDto);
 		categoria = service.save(categoria);
 		//busca a chamada do método (categorias/) e resgata o id criado 
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
@@ -64,7 +67,8 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> put(@PathVariable Integer id, @RequestBody Categoria obj){
+	public ResponseEntity<?> put(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO objDto){
+		Categoria obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.put(obj);
 		
