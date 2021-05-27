@@ -30,6 +30,7 @@ public class Cliente implements Serializable{
 	private String nome;
 	private String cpfOuCnpj;
 	private Integer tipo;
+	private String email;
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	//conjunto de strings que não permite salvar valores repwetidos
@@ -45,12 +46,13 @@ public class Cliente implements Serializable{
 		
 	}
 
-	public Cliente(Integer id, String nome, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String cpfOuCnpj, String email, TipoCliente tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCod();
+		this.tipo = (tipo==null) ? null : tipo.getCod();
+		this.email = email;
 	}
 
 	public Integer getId() {
@@ -109,6 +111,14 @@ public class Cliente implements Serializable{
 		this.pedidos = pedidos;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -134,6 +144,8 @@ public class Cliente implements Serializable{
 			return false;
 		return true;
 	}
+
+	
 	
 	
 	

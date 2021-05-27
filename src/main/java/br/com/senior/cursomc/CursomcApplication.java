@@ -103,7 +103,7 @@ public class CursomcApplication implements CommandLineRunner{
 		serviceCid.saveAll(Arrays.asList(cid1, cid2, cid3));
 		
 		
-		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", TipoCliente.PESSOA_FISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "2342423434", "maria@gmail.com", TipoCliente.PESSOA_FISICA);
 		cli1.getTelefones().addAll(Arrays.asList("234234234", "23432434"));
 		
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 300", "Jardim", "02394093", cli1, cid1);
