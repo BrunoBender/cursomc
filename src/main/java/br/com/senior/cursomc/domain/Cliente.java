@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,8 @@ public class Cliente implements Serializable{
 	private String nome;
 	private String cpfOuCnpj;
 	private Integer tipo;
+	//não permite inserir dois valores iguais no banco de dados
+	@Column(unique=true)
 	private String email;
 	@OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
