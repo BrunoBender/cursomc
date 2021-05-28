@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import br.com.senior.cursomc.domain.Cliente;
 import br.com.senior.cursomc.services.validation.ClienteUpdate;
 
-@ClienteUpdate
+@ClienteUpdate 
 public class ClienteDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
