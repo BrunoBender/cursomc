@@ -33,8 +33,13 @@ public class ItemPedidoService {
 		return obj;
 	}
 	
+	public void save(ItemPedido obj) {
+		repo.save(obj);
+	}
+	
 	public void saveAll(List<ItemPedido> obj) {
 		repo.saveAll(obj);
 	}
+	
 	
 }

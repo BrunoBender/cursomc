@@ -17,7 +17,7 @@ public class URL {
 		return list;
 	}
 	
-	//ao passar um valor com espaçoes pela URI ela converte para um código, e eeste método descodifica esse espaço dado
+	//ao passar um valor com espaços pela URI ela converte para um código, e este método descodifica esse espaço dado
 	public static String decodeParam(String s) {
 		try {
 			return URLDecoder.decode(s, "UTF-8");
