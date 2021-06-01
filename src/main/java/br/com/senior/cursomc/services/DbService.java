@@ -52,7 +52,7 @@ public class DbService {
 		Categoria cat6 = new Categoria(null, "Carnes");
 		Categoria cat7 = new Categoria(null, "Laticineos");
 		Categoria cat8 = new Categoria(null, "Queijos");
-		
+
 		Produto prod1 = new Produto(null, "Computador", 2000.00);
 		Produto prod2 = new Produto(null, "Impressora", 800.00);
 		Produto prod3 = new Produto(null, "Mouse", 80.00);
@@ -106,7 +106,7 @@ public class DbService {
 		serviceCid.saveAll(Arrays.asList(cid1, cid2, cid3));
 		
 		
-		Cliente cli1 = new Cliente(null, "Maria Silva", "2342423434", "maria@gmail.com", TipoCliente.PESSOA_FISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "2342423434", "brunopaulobender@gmail.com", TipoCliente.PESSOA_FISICA);
 		cli1.getTelefones().addAll(Arrays.asList("234234234", "23432434"));
 		
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 300", "Jardim", "02394093", cli1, cid1);
