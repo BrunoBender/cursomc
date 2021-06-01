@@ -78,7 +78,7 @@ public class PedidoService {
 		}
 		itemPService.saveAll(new ArrayList<ItemPedido>(obj.getItens()));
 
-		emailService.sendOrderConfirmationEmail(obj);
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 	}
 	
