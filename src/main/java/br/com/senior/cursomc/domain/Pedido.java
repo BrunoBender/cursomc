@@ -142,7 +142,7 @@ public class Pedido implements Serializable{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		final StringBuilder sb = new StringBuilder("Pedido{");
 		sb.append("Peido número: ").append(getId());
-		sb.append(", Instante:").append(sdf.format(getInstante())); 
+		sb.append(", Instante:").append(sdf.format(getInstante()));
 		sb.append(", Cliente: ").append(getCliente().getNome());
 		sb.append(", Situação do pagamento:").append(getPagamento().getEstado().getDescricao());
 		sb.append("\nDetalhes:\n");
