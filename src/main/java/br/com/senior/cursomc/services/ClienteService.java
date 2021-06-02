@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,8 @@ public class ClienteService {
 	private ClienteRepository repo;
 	@Autowired
 	private EnderecoRepository repoEnd;
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
 	public Optional<Cliente> getOne(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
@@ -82,11 +85,12 @@ public class ClienteService {
 	}
 	
 	public Cliente fromDTO(ClienteDTO obj) {
-		return new Cliente(null,obj.getNome(), null, obj.getEmail(), null );
+		return new Cliente(null,obj.getNome(), null, obj.getEmail(),null, null );
 	}
 	
 	public Cliente fromDTO(ClienteNewDto obj) {
-		Cliente cli = new Cliente(null, obj.getNome(), obj.getCpfOuCnpj(), obj.getEmail(), TipoCliente.toEnum(obj.getTipo()));
+		//A senha não é salva diretamente, ela passa pelo processo de encode
+		Cliente cli = new Cliente(null, obj.getNome(), obj.getCpfOuCnpj(), obj.getEmail(), pe.encode(obj.getSenha()),TipoCliente.toEnum(obj.getTipo()));
 		Cidade cid = new Cidade(obj.getCidadeId(), null, null);
 		Endereco end = new Endereco(null, obj.getLogradouro(), obj.getNumero(), obj.getComplemento(), obj.getBairro(), obj.getCep(), cli, cid);
 		cli.getEnderecos().add(end);

@@ -35,6 +35,8 @@ public class Cliente implements Serializable{
 	//não permite inserir dois valores iguais no banco de dados
 	@Column(unique=true)
 	private String email;
+	@JsonIgnore
+	private String senha;
 	@OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	//conjunto de strings que não permite salvar valores repwetidos
@@ -50,13 +52,14 @@ public class Cliente implements Serializable{
 		
 	}
 
-	public Cliente(Integer id, String nome, String cpfOuCnpj, String email, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String cpfOuCnpj, String email, String senha, TipoCliente tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo==null) ? null : tipo.getCod();
 		this.email = email;
+		this.senha = senha;
 	}
 
 	public Integer getId() {
@@ -122,6 +125,14 @@ public class Cliente implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 	
 
 	@Override
@@ -149,10 +160,6 @@ public class Cliente implements Serializable{
 		return true;
 	}
 
-	
-	
-	
-	
-	
-	
+
+
 }
