@@ -5,17 +5,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
+import br.com.senior.cursomc.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -39,17 +33,21 @@ public class Cliente implements Serializable{
 	private String senha;
 	@OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
-	//conjunto de strings que não permite salvar valores repwetidos
+	//conjunto de strings que não permite salvar valores repetidos
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
+
 	
-	
+	//Adiciona o tipo de Perfil Cliente altomaticamente, para garantir que todos os usuários cadastrados sejam desse tipo de usuário
 	public Cliente() {
-		
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public Cliente(Integer id, String nome, String cpfOuCnpj, String email, String senha, TipoCliente tipo) {
@@ -60,6 +58,7 @@ public class Cliente implements Serializable{
 		this.tipo = (tipo==null) ? null : tipo.getCod();
 		this.email = email;
 		this.senha = senha;
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public Integer getId() {
@@ -124,6 +123,15 @@ public class Cliente implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Set<Perfil> getPerfils(){
+		//converte a coleção de inteiros salvos no banco para Perfils atraves do código
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	public void addPerfil(Perfil perfil){
+		perfis.add(perfil.getCod());
 	}
 
 	public String getSenha() {
