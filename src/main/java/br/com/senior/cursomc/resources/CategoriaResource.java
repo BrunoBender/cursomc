@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +57,9 @@ public class CategoriaResource {
 			Optional<Categoria> obj = service.buscar(id);
 			return ResponseEntity.ok().body(obj);
 	}
-	
+
+	//Permite a utilização apenas do usuário que tiver o perfil de ADMIN, conforme a tag (@EnableGlobalMethodSecurity(prePostEnabled = true)) declarada em SecurityConfig
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> post(@Valid @RequestBody CategoriaDTO categoriaDto){
 		Categoria categoria = service.fromDTO(categoriaDto);
@@ -65,7 +68,8 @@ public class CategoriaResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> put(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO objDto){
 		Categoria obj = service.fromDTO(objDto);
@@ -74,7 +78,8 @@ public class CategoriaResource {
 		
 		return ResponseEntity.noContent().build();
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		
