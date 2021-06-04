@@ -113,9 +113,15 @@ public class ClienteService {
 		return obj;
 	}
 
+	public Cliente findByEmail(String email){
+		return repo.findByEmail(email);
+	}
+
 	private Cliente UpdateData(Cliente newObj, Cliente obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 		return newObj;
 	}
+
+
 }
