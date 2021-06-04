@@ -1,7 +1,9 @@
 package br.com.senior.cursomc.config;
 
 import br.com.senior.cursomc.security.JwtAuthenticationFilter;
+import br.com.senior.cursomc.security.JwtAuthorizationFilter;
 import br.com.senior.cursomc.security.JwtUtil;
+import br.com.senior.cursomc.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private Environment env;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsServiceImpl;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -60,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         //adiciona o filtro criado para interseptar as requisições de login ao Sprin Security
         http.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
     }
 
     //Define o userDatailService e quem é o passwordEncoder
