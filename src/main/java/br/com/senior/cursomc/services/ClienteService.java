@@ -3,6 +3,9 @@ package br.com.senior.cursomc.services;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.senior.cursomc.domain.enums.Perfil;
+import br.com.senior.cursomc.security.UserSS;
+import br.com.senior.cursomc.services.exceptions.AuthorizationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -24,6 +27,8 @@ import br.com.senior.cursomc.repositories.ClienteRepository;
 import br.com.senior.cursomc.repositories.EnderecoRepository;
 import br.com.senior.cursomc.services.exceptions.DataIntegrityException;
 import br.com.senior.cursomc.services.exceptions.ObjectNotFoundException;
+
+import javax.naming.AuthenticationException;
 
 @Service
 public class ClienteService {
@@ -105,6 +110,12 @@ public class ClienteService {
 	}
 	
 	public Optional<Cliente> buscar(Integer id) {
+		//Retorna o usuário logado
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())){
+			throw  new AuthorizationException("Acesso negado");
+		}
+
 		Optional<Cliente> obj = repo.findById(id);
 		
 		if(obj.isEmpty()) {
