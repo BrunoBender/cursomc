@@ -28,6 +28,11 @@ public class CidadeService {
 		List<Cidade> obj = repo.findAll();
 		return obj;
 	}
+
+	public List<Cidade> getByEstadoId(Integer idEstado){
+		return repo.findCidadesByEstadoId(idEstado);
+	}
+
 	
 	public void saveAll(List<Cidade> obj) {
 		repo.saveAll(obj);

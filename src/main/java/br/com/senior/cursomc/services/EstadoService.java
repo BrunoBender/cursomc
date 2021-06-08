@@ -26,9 +26,10 @@ public class EstadoService {
 	}
 	
 	public List<Estado> getAll(){
-		List<Estado> obj = repo.findAll();
+		List<Estado> obj = repo.findAllByOrderByNome();
 		return obj;
 	}
+
 	
 	public void saveAll(List<Estado> obj) {
 		repo.saveAll(obj);

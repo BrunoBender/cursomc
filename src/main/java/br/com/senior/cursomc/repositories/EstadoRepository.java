@@ -5,8 +5,14 @@ import org.springframework.stereotype.Repository;
 
 import br.com.senior.cursomc.domain.Categoria;
 import br.com.senior.cursomc.domain.Estado;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
 public interface EstadoRepository extends JpaRepository<Estado, Integer>{
 
+    @Transactional(readOnly = true)
+    //retorna todos os estados ordenados por nome
+    public List<Estado> findAllByOrderByNome();
 }
