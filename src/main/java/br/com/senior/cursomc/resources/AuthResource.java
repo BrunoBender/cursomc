@@ -36,6 +36,8 @@ public class AuthResource {
         String token = jwtUtil.generateToken(user.getUsername());
         //Adiciona o novo token no response da requisição
         response.addHeader("Authorization", "Bearer " + token);
+        //Libera o acesso do CORS, pois por padrão ele é mais 'rígido' para responces com headers personalizados
+        response.addHeader("access-control-expose-headers", "Authorization");
         return ResponseEntity.noContent().build();
     }
 

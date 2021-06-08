@@ -59,6 +59,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //gera o Toke apartir das informações do usuário
         String token = jwtUtil.generateToken(username);
         res.addHeader("Authorization", "Bearer " + token);
+        //Libera o acesso do CORS, pois por padrão ele é mais 'rígido' para responces com headers personalizados
+        res.addHeader("access-control-expose-headers", "Authorization");
     }
 
     //Caso a implementação de autenticação falhe (usuário inválido), esta classe irá personalizar o retorno do erro
