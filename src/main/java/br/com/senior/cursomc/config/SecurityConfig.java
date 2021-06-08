@@ -88,8 +88,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //elimina o erro do Cors na cominicação do Front com o Backend, liberando o acesso
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration =  new CorsConfiguration().applyPermitDefaultValues();
+        //define os métodos que serão permitidos pelo Cors
+        configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        // /** -> todos os caminhos
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
